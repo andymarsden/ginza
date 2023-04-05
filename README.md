@@ -16,4 +16,6 @@ Version control
 
 Standard format
 
-Shared mailboxes.
+Shared mailboxes
+
+Lineage
