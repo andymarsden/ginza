@@ -28,6 +28,8 @@ Standardised communiation of data
 
 Types of analytics
 
+Everything as an indicator
+
 - Establish progress and performance measurements at every stage of the data flow. Where possible, benchmark data-flow cycle times.
 - Define rules for an abstracted semantic layer. Ensure everyone is “speaking the same language” and agrees upon what the data (and metadata) is and is not.
 - Validate with the “eyeball test”: Include continuous-improvement -oriented human feedback loops. Consumers must be able to trust the data, and that can only come with incremental validation.
