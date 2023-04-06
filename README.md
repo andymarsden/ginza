@@ -32,7 +32,7 @@ Everything as an indicator
 
 
 
-
+# DevOps Manifesto
 
 - Establish progress and performance measurements at every stage of the data flow. Where possible, benchmark data-flow cycle times.
 - Define rules for an abstracted semantic layer. Ensure everyone is “speaking the same language” and agrees upon what the data (and metadata) is and is not.
