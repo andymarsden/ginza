@@ -34,4 +34,4 @@
 | 2160        | Adult Needs Assessment (Revised)                |
 
 #### Statuses
-NOT  'CANCELLED', 'PROPOSED', 'COMPLETED'
+'COMPLETED'
