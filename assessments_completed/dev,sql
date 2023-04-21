@@ -1,16 +1,45 @@
-/****** Script for SelectTopNRows command from SSMS  ******/
-SELECT        dt_person.person_id, MO_WORKFLOW_STEPS.WORKFLOW_ID, MO_WORKFLOW_STEPS.WORKFLOW_STEP_ID, MO_WORKFLOW_STEP_TYPES_1.DESCRIPTION AS previous_step_type, 
-                         MO_WORKFLOW_STEP_TYPES.DESCRIPTION AS step_type, MO_WORKFLOW_STEPS.STEP_STATUS AS status, MO_WORKFLOW_STEPS.PROPOSED_ON, MO_WORKFLOW_STEPS.STARTED_ON, 
-                         MO_WORKFLOW_STEPS.COMPLETED_ON, MO_WORKFLOW_STEPS.CANCELLED_ON, MO_WORKFLOW_STEPS.RESPONSIBLE_TEAM_ID, MO_WORKFLOW_STEPS.ASSIGNEE_ID, 
-                         MO_WORKFLOW_LINKS.SOURCE_STEP_ID, MO_WORKFLOW_STEPS_1.WORKFLOW_STEP_ID AS previous_step_id
-FROM            MO_WORKFLOW_STEPS INNER JOIN
-                         MO_WORKFLOW_STEP_TYPES ON MO_WORKFLOW_STEPS.WORKFLOW_STEP_TYPE_ID = MO_WORKFLOW_STEP_TYPES.WORKFLOW_STEP_TYPE_ID INNER JOIN
-                         _lcc_workflow_config ON MO_WORKFLOW_STEPS.WORKFLOW_STEP_TYPE_ID = _lcc_workflow_config.config_2 INNER JOIN
-                             (SELECT        DM_PERSONS.PERSON_ID AS person_id, DM_SUBGROUP_SUBJECTS.SUBGROUP_ID
-                               FROM            DM_SUBGROUP_SUBJECTS INNER JOIN
-                                                         DM_PERSONS ON DM_PERSONS.PERSON_ID = DM_SUBGROUP_SUBJECTS.SUBJECT_COMPOUND_ID) AS dt_person ON MO_WORKFLOW_STEPS.SUBGROUP_ID = dt_person.SUBGROUP_ID INNER JOIN
-                         MO_WORKFLOW_LINKS ON MO_WORKFLOW_STEPS.WORKFLOW_STEP_ID = MO_WORKFLOW_LINKS.TARGET_STEP_ID INNER JOIN
-                         MO_WORKFLOW_STEPS AS MO_WORKFLOW_STEPS_1 ON MO_WORKFLOW_LINKS.SOURCE_STEP_ID = MO_WORKFLOW_STEPS_1.WORKFLOW_STEP_ID INNER JOIN
-                         MO_WORKFLOW_STEP_TYPES AS MO_WORKFLOW_STEP_TYPES_1 ON MO_WORKFLOW_STEPS_1.WORKFLOW_STEP_TYPE_ID = MO_WORKFLOW_STEP_TYPES_1.WORKFLOW_STEP_TYPE_ID
-WHERE        (_lcc_workflow_config.type = 'step_mapping') AND (_lcc_workflow_config.config_1 = 'assessments') AND (MO_WORKFLOW_STEPS.PROPOSED_ON > CONVERT(DATETIME, '2022-04-01 00:00:00', 102)) AND 
-                         (MO_WORKFLOW_STEPS.STEP_STATUS = 'COMPLETED')
+select 
+  dt_person.person_id, 
+  mo_workflow_steps.workflow_id, 
+  mo_workflow_steps.workflow_step_id, 
+  mo_workflow_step_types_1.description as previous_step_type, 
+  mo_workflow_step_types.description as step_type, 
+  mo_workflow_steps.step_status as status, 
+  mo_workflow_steps.proposed_on, 
+  mo_workflow_steps.started_on, 
+  mo_workflow_steps.completed_on, 
+  mo_workflow_steps.cancelled_on, 
+  mo_workflow_steps.responsible_team_id, 
+  mo_workflow_steps.assignee_id, 
+  mo_workflow_steps_1.workflow_step_id as previous_step_id 
+from 
+  mo_workflow_steps 
+  inner join mo_workflow_step_types on mo_workflow_steps.workflow_step_type_id = mo_workflow_step_types.workflow_step_type_id 
+  inner join _lcc_workflow_config on mo_workflow_steps.workflow_step_type_id = _lcc_workflow_config.config_2 
+  inner join (
+    select 
+      dm_persons.person_id as person_id, 
+      dm_subgroup_subjects.subgroup_id 
+    from 
+      dm_subgroup_subjects 
+      inner join dm_persons on dm_persons.person_id = dm_subgroup_subjects.subject_compound_id
+  ) as dt_person on mo_workflow_steps.subgroup_id = dt_person.subgroup_id 
+  inner join mo_workflow_links on mo_workflow_steps.workflow_step_id = mo_workflow_links.target_step_id 
+  inner join mo_workflow_steps as mo_workflow_steps_1 on mo_workflow_links.source_step_id = mo_workflow_steps_1.workflow_step_id 
+  inner join mo_workflow_step_types as mo_workflow_step_types_1 on mo_workflow_steps_1.workflow_step_type_id = mo_workflow_step_types_1.workflow_step_type_id 
+where 
+  (
+    _lcc_workflow_config.type = 'step_mapping'
+  ) 
+  and (
+    _lcc_workflow_config.config_1 = 'assessments'
+  ) 
+  and (
+    mo_workflow_steps.proposed_on > convert(
+      datetime, '2020-04-01 00:00:00', 
+      102
+    )
+  ) 
+  and (
+    mo_workflow_steps.step_status = 'completed'
+  )
