@@ -157,8 +157,4 @@ WHERE
       AND reporting.dbo.MO_WORKFLOW_STEP_TYPES.DESCRIPTION IN ('Adult Conversation Record') 
       AND reporting.dbo.MO_WORKFLOW_STEPS.STARTED_ON Is Null
     )
-  ) OPTION (
-    USE HINT (
-      'FORCE_LEGACY_CARDINALITY_ESTIMATION'
-    )
-  )
+  ) 
